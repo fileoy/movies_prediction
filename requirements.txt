@@ -3,4 +3,4 @@ joblib
 pydantic
 scikit-learn
 uvicorn
-xgboost
+streamlit_lottie
