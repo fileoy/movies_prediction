@@ -1,7 +1,20 @@
 
 import streamlit as st
 import pandas as pd
+import requests
 
+from streamlit_lottie import st_lottie
+
+
+def load_lot(url):
+    r= requests.get(url)
+    if r.status_code !=200:
+        return None
+    return r.json()
+
+lot_cod = load_lot("https://lottie.host/b9a3350e-01f2-4546-bd0a-ac71f2c33a8a/JjqAHCKqG2.json")
+
+st_lottie(lot_cod, height=150, key="movie_lottie")
 
 st.title("Movie Recommendations")
 st.text(body="What was the last movie you watched that you would like to see a similar one to?")
@@ -74,7 +87,7 @@ if not filtered_movies.empty:
             cluster = get_genres_by_title(selected_movie)
             
             if cluster:
-                st.success(f"Genres for '{selected_movie}': {cluster}")
+                st.success(f"If you've watched '{selected_movie}', you might like these movies:")
                 
                 # Find recommended movies based on the cluster
                 clu = df[df['Title'] == selected_movie]['Cluster'].values[0]
