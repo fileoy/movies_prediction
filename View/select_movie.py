@@ -41,7 +41,7 @@ st.write(
     
     **AND MORE...**
     
-    we give you  **THE ULTIMATE RECOMMENDATION SYSTEM!** 🚀
+    we give you  **THE ULTIMATE MOVIE RECOMMENDATION SYSTEM!** 🚀
     
     A simple and fun movie recommendation site.  
     
@@ -59,7 +59,7 @@ if len(selected_genres) > 5:
 # Convert selected genres into a dictionary
 user_genres = {genre: 1 if genre in selected_genres else 0 for genre in genre_columns}
 
-if st.button("Predict Cluster"):
+if st.button("Discover Movies!"):
     if len(selected_genres) == 0:
         st.error("❌ Oops! You need to select at least one genre. Don't be shy, make a choice!")
     elif len(selected_genres) > 5:
