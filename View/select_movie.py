@@ -4,16 +4,16 @@ import numpy as np
 from joblib import load
 import requests
 
-
+API_URL = "https://movies-prediction.onrender.com/predict"
 df = pd.read_csv('data_with_cluster.csv')
 df.drop(columns="Unnamed: 0", inplace=True)
 
 
 genre_columns = [
     'Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime',
-    'Documentary', 'Drama', 'Family', 'Fantasy', 'Film-Noir', 'History',
-    'Horror', 'Music', 'Musical', 'Mystery', 'News', 'Romance', 'Sci-Fi',
-    'Sport', 'Thriller', 'War', 'Western'
+    'Documentary', 'Drama', 'Family', 'Fantasy', 'Film_Noir', 'History',
+    'Horror', 'Music', 'Musical', 'Mystery', 'News', 'Romance', 'Sci_Fi',
+    'Sport', 'Thriller', 'Unknown', 'War', 'Western'
 ]
 
 st.title("Movie Cluster Predictor")
@@ -27,6 +27,7 @@ user_genres = {genre: 1 if genre in selected_genres else 0 for genre in genre_co
 
 if st.button("Predict Cluster"):
     if any(user_genres):
+        
         response = requests.post(API_URL, json=user_genres)
 
         if response.status_code == 200:
@@ -36,7 +37,8 @@ if st.button("Predict Cluster"):
             st.error("Error making prediction!") 
           
         
-        recommended = df[df['Cluster'] == predict_cluster_from_genres(user_genres)]
+        #recommended = df[df['Cluster'] == prediction(user_genres)]
+        
         if st.checkbox("Show recomended movies"):
             st.dataframe(recommended[['Title','Rating','Number of User Reviews','Genres','Cluster']])
     else:

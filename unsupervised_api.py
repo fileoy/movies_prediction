@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+import numpy as np
 import joblib
 model = joblib.load('kmeans_model.joblib')
 scaler = joblib.load('scaler.joblib')
@@ -87,5 +88,6 @@ def predict(input_features: InputFeatures):
 @app.post("/predict")
 async def predict(input_features: InputFeatures):
     data = preprocessing(input_features)
-    y_pred = model.predict(data)
+    genre_vector = np.array(data).reshape(1, -1)
+    y_pred = model.predict(genre_vector)
     return {"pred": y_pred.tolist()[0]}
